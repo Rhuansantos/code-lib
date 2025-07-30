@@ -1,9 +1,9 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react';
-import * as Popover from '@radix-ui/react-popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import * as Dialog from '@radix-ui/react-dialog';
-import * as Separator from '@radix-ui/react-separator';
-import * as FocusScope from '@radix-ui/react-focus-scope';
-import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 import { useDateRange } from './useDateRange';
 import { useResponsive } from './useResponsive';
@@ -146,7 +146,7 @@ export const DateRangeCalendar: React.FC<DateRangeSelectProps> = ({
         </div>
       </div>
       
-      <Separator.Root className="bg-gray-200 h-px" />
+      <Separator className="bg-gray-200" />
       
       <div className="flex items-center justify-between p-4 bg-gray-50">
         <div className="text-sm text-gray-600">
@@ -157,13 +157,13 @@ export const DateRangeCalendar: React.FC<DateRangeSelectProps> = ({
             </span>
           )}
         </div>
-        <button
+        <Button
           onClick={() => handleOpenChange(false)}
           disabled={!startDate}
-          className="px-4 py-2 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed font-medium transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 hover:shadow-md"
+          className="font-medium"
         >
           Apply
-        </button>
+        </Button>
       </div>
     </>
   );
@@ -192,7 +192,7 @@ export const DateRangeCalendar: React.FC<DateRangeSelectProps> = ({
         allowPastDates={allowPastDates}
       />
       
-      <Separator.Root className="bg-gray-200 h-px" />
+      <Separator className="bg-gray-200" />
       
       <div className="flex items-center justify-between p-4 bg-gray-50">
         <div className="text-sm text-gray-600">
@@ -204,22 +204,22 @@ export const DateRangeCalendar: React.FC<DateRangeSelectProps> = ({
           )}
         </div>
         <div className="flex gap-2">
-          <button
+          <Button
             onClick={() => {
               clearDates();
             }}
             disabled={!startDate && !endDate}
-            className="px-4 py-2 text-sm bg-gray-200 text-gray-700 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-500 hover:shadow-sm"
+            variant="secondary"
           >
             Clear
-          </button>
+          </Button>
           <Dialog.Close asChild>
-            <button
+            <Button
               disabled={!startDate}
-              className="px-4 py-2 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed font-medium transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 hover:shadow-md"
+              className="font-medium"
             >
               Apply
-            </button>
+            </Button>
           </Dialog.Close>
         </div>
       </div>
@@ -231,8 +231,8 @@ export const DateRangeCalendar: React.FC<DateRangeSelectProps> = ({
       <h2 className="text-2xl font-bold mb-6">Custom Date Range Select (React-Dates Style)</h2>
       
       <div className="relative" ref={wrapperRef}>
-        <Popover.Root open={!isMobile && (isOpen)} onOpenChange={handleOpenChange}>
-          <Popover.Trigger asChild>
+        <Popover open={!isMobile && (isOpen)} onOpenChange={handleOpenChange}>
+          <PopoverTrigger asChild>
             <button
               onClick={isMobile ? () => setIsDialogOpen(true) : undefined}
               disabled={disabled}
@@ -249,58 +249,56 @@ export const DateRangeCalendar: React.FC<DateRangeSelectProps> = ({
                 isMobile={isMobile}
               />
             </button>
-          </Popover.Trigger>
+          </PopoverTrigger>
 
-          <Popover.Portal>
-            <Popover.Content
-              className={`z-50 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden min-w-[600px] transition-all duration-200 ease-out ${
-                isOpen && isAnimating 
-                  ? 'opacity-100 scale-100 translate-y-0' 
-                  : 'opacity-0 scale-95 translate-y-1'
-              }`}
-              sideOffset={8}
-              align="start"
-              onKeyDown={handleKeyDown}
-            >
-              <FocusScope.Root trapped>
-                {renderCalendarContent()}
-              </FocusScope.Root>
-            </Popover.Content>
-          </Popover.Portal>
-        </Popover.Root>
+          <PopoverContent
+            className={cn(
+              "z-50 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden min-w-[600px] p-0 transition-all duration-200 ease-out",
+              isOpen && isAnimating 
+                ? 'opacity-100 scale-100 translate-y-0' 
+                : 'opacity-0 scale-95 translate-y-1'
+            )}
+            sideOffset={8}
+            align="start"
+            onKeyDown={handleKeyDown}
+          >
+            {renderCalendarContent()}
+          </PopoverContent>
+        </Popover>
 
         <Dialog.Root open={isDialogOpen} onOpenChange={handleOpenChange}>
           <Dialog.Portal>
             <Dialog.Overlay 
-              className={`fixed inset-0 bg-black z-40 transition-opacity duration-200 ease-out ${
-                isDialogOpen && isAnimating ? 'bg-opacity-50' : 'bg-opacity-0'
-              }`} 
+              className={cn(
+                "fixed inset-0 bg-black transition-opacity duration-200 z-40",
+                isDialogOpen ? 'bg-opacity-50' : 'bg-opacity-0'
+              )} 
             />
             
             <Dialog.Content 
-              className={`fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-2xl shadow-2xl border border-gray-200 overflow-hidden max-h-[90vh] overflow-y-auto transition-all duration-300 ease-out ${
-                isDialogOpen && isAnimating 
-                  ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-full'
-              }`}
+              className={cn(
+                "fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-2xl shadow-2xl border border-gray-200 max-h-[90vh] overflow-hidden transition-transform duration-300 ease-out",
+                isDialogOpen ? 'translate-y-0' : 'translate-y-full'
+              )}
               onKeyDown={handleKeyDown}
             >
-              <FocusScope.Root trapped>
-              <div className="flex items-center justify-between p-4 border-b">
+              <div className="flex items-center justify-between p-4 border-b bg-white">
                 <Dialog.Title className="text-lg font-semibold">Select Date Range</Dialog.Title>
                 <Dialog.Close asChild>
-                  <button
-                    className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-150"
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8"
                     aria-label="Close"
                   >
-                    ✕
-                    <VisuallyHidden.Root>Close dialog</VisuallyHidden.Root>
-                  </button>
+                    <span className="text-lg">✕</span>
+                  </Button>
                 </Dialog.Close>
               </div>
-
+              
+              <div className="overflow-y-auto max-h-[calc(90vh-4rem)] bg-white">
                 {renderMobileCalendarContent()}
-              </FocusScope.Root>
+              </div>
             </Dialog.Content>
           </Dialog.Portal>
         </Dialog.Root>

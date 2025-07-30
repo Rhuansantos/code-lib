@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
-import * as Tooltip from '@radix-ui/react-tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Button } from '@/components/ui/button';
 import { DateRangeTriggerProps } from './types';
 
 export const DateRangeTrigger: React.FC<DateRangeTriggerProps> = ({ 
@@ -20,28 +21,28 @@ export const DateRangeTrigger: React.FC<DateRangeTriggerProps> = ({
       <div className="flex items-center gap-2 flex-shrink-0">
         <div className="w-6 h-6 flex items-center justify-center">
           {hasSelectedDates && (
-            <Tooltip.Provider>
-              <Tooltip.Root>
-                <Tooltip.Trigger asChild>
-                  <button
+            <TooltipProvider delayDuration={800} skipDelayDuration={600}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
                     onClick={onClear}
-                    className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-150"
+                    variant="ghost"
+                    size="icon"
+                    className="h-6 w-6 text-gray-400 hover:text-gray-600"
                     aria-label="Clear dates"
                   >
                     <span className="text-sm leading-none">✕</span>
-                  </button>
-                </Tooltip.Trigger>
-                <Tooltip.Portal>
-                  <Tooltip.Content
-                    className="px-2 py-1 text-sm bg-gray-900 text-white rounded shadow-lg"
-                    sideOffset={5}
-                  >
-                    Clear selected dates
-                    <Tooltip.Arrow className="fill-gray-900" />
-                  </Tooltip.Content>
-                </Tooltip.Portal>
-              </Tooltip.Root>
-            </Tooltip.Provider>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent
+                  className="px-2 py-1 text-sm"
+                  sideOffset={5}
+                  avoidCollisions={true}
+                >
+                  Clear selected dates
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
         </div>
         <ChevronDown 

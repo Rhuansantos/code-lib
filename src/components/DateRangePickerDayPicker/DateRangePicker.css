@@ -1,0 +1,147 @@
+/* Custom styles for react-day-picker */
+.rdp-custom {
+  --rdp-cell-size: 40px;
+  --rdp-accent-color: #2563eb;
+  --rdp-background-color: #e0e7ff;
+  --rdp-selected-color: #1e40af;
+  --rdp-selected-text-color: #ffffff;
+}
+
+/* Override default styles */
+.rdp-custom .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+  background-color: #f3f4f6;
+}
+
+.rdp-custom .rdp-day_selected,
+.rdp-custom .rdp-day_selected:focus-visible,
+.rdp-custom .rdp-day_selected:hover {
+  background-color: var(--rdp-selected-color);
+  color: var(--rdp-selected-text-color);
+}
+
+.rdp-custom .rdp-day_range_middle {
+  background-color: var(--rdp-background-color);
+  color: var(--rdp-selected-color);
+}
+
+.rdp-custom .rdp-day_range_start {
+  background-color: var(--rdp-selected-color);
+  color: var(--rdp-selected-text-color);
+  border-radius: 50% 0 0 50%;
+}
+
+.rdp-custom .rdp-day_range_end {
+  background-color: var(--rdp-selected-color);
+  color: var(--rdp-selected-text-color);
+  border-radius: 0 50% 50% 0;
+}
+
+.rdp-custom .rdp-day_range_start.rdp-day_range_end {
+  border-radius: 50%;
+}
+
+/* Navigation buttons */
+.rdp-custom .rdp-button_nav {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.rdp-custom .rdp-button_nav:hover {
+  background-color: #f3f4f6;
+}
+
+/* Calendar navigation */
+.rdp-custom .rdp-nav {
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rdp-custom .rdp-nav_start {
+  left: 0;
+}
+
+.rdp-custom .rdp-nav_end {
+  right: 0;
+}
+
+/* Caption layout */
+.rdp-custom .rdp-caption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+/* Month caption */
+.rdp-custom .rdp-caption_label {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+/* Weekday headers */
+.rdp-custom .rdp-weekday {
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+/* Disabled days */
+.rdp-custom .rdp-day_disabled {
+  opacity: 0.3;
+}
+
+/* Today */
+.rdp-custom .rdp-day_today:not(.rdp-day_selected) {
+  font-weight: 700;
+  color: var(--rdp-accent-color);
+}
+
+/* Animations */
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+/* Month grid spacing */
+.rdp-custom .rdp-months {
+  display: flex;
+  gap: 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .rdp-custom {
+    --rdp-cell-size: 44px;
+  }
+}
