@@ -6,6 +6,10 @@ import {
 } from "./components/DateRangeCalendarReactDates";
 import { DateRangeSelect } from "./components/DateRangeCalendarShadcn";
 import { DateRangePicker } from "./components/DateRangePickerDayPicker";
+import {
+  DateRangeSelectReactDates,
+  DateRange as DateRangeSelectReactDatesType,
+} from "./components/DateRangeSelectReactDates";
 
 const App: React.FC = () => {
   const handleDateRangeChange = (dateRange: DateRange): void => {
@@ -30,6 +34,15 @@ const App: React.FC = () => {
     console.log("DayPicker implementation - Date range changed:", dateRange);
   };
 
+  const handleSelectReactDatesChange = (
+    dateRange: DateRangeSelectReactDatesType
+  ): void => {
+    console.log(
+      "Select React-dates implementation - Date range changed:",
+      dateRange
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="space-y-8">
@@ -44,13 +57,19 @@ const App: React.FC = () => {
           />
         </div> */}
 
-        <div className="border-t pt-8">
+        {/* <div className="border-t pt-8">
           <DateRangeSelect onDateRangeChange={handleShadcnDateRangeChange} />
-        </div>
+        </div> */}
 
         <div className="border-t pt-8">
-          <DateRangePicker onDateRangeChange={handleDayPickerDateRangeChange} />
+          <DateRangeSelectReactDates
+            onDateRangeChange={handleSelectReactDatesChange}
+          />
         </div>
+
+        {/* <div className="border-t pt-8">
+          <DateRangePicker onDateRangeChange={handleDayPickerDateRangeChange} />
+        </div> */}
       </div>
     </div>
   );
