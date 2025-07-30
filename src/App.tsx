@@ -46,9 +46,7 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="space-y-8">
-        {/* <DateRangeCalendar 
-          onDateRangeChange={handleDateRangeChange}
-        /> */}
+        <DateRangePicker onDateRangeChange={handleDateRangeChange} />
 
         {/* <div className="border-t pt-8">
           <DateRangeCalendarReactDates 
